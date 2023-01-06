@@ -70,7 +70,7 @@
                         Announcements
                     </button>
                 </li>
-                {% if user.is_faculty %}
+                {% if user.is_faculty or user.is_staff %}
                     <li class="mr-2" role="presentation">
                         <button class="flex inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" id="subjects-tab" data-tabs-target="#subjects" type="button" role="tab" aria-controls="subjects" aria-selected="false">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -79,7 +79,7 @@
                             Subjects
                         </button>
                     </li>
-                {% elif user.is_heads %}
+                {% elif user.is_heads or user.is_staff %}
                     <li class="mr-2" role="presentation">
                         <button class="flex inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" id="subjects-tab" data-tabs-target="#subjects" type="button" role="tab" aria-controls="subjects" aria-selected="false">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -89,7 +89,7 @@
                         </button>
                     </li>
                 {% endif %}
-                {% if not user.is_ext_coordinators %}
+                {% if not user.is_ext_coordinators  %}
                     <li class="mr-2" role="presentation">
                         <button class="flex inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" id="research-tab" data-tabs-target="#research" type="button" role="tab" aria-controls="research" aria-selected="false">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -123,28 +123,28 @@
             <div class="hidden p-4 bg-gray-50 rounded-lg" id="announcements" role="tabpanel" aria-labelledby="announcements-tab">
                 {% include 'announcements.html' %}
             </div>
-            {% if user.is_faculty %}
+            {% if user.is_faculty or user.is_staff %}
                 <div class="hidden p-4 bg-gray-50 rounded-lg" id="subjects" role="tabpanel" aria-labelledby="subjects-tab">
                     {% include 'subjects.html' %}
                 </div>
-            {% elif user.is_heads %}
+            {% elif user.is_heads or user.is_staff %}
                 <div class="hidden p-4 bg-gray-50 rounded-lg" id="subjects" role="tabpanel" aria-labelledby="subjects-tab">
                     {% include 'faculty.html' %}
                 </div>
             {% endif %}
             <div class="hidden p-4 bg-gray-50 rounded-lg" id="research" role="tabpanel" aria-labelledby="research-tab">
-                {% if not user.is_res_coordinators %}
+                {% if not user.is_res_coordinators or user.is_staff %}
                     {% include 'research.html' %}
-                {% elif user.is_res_coordinators %}
+                {% elif user.is_res_coordinators or user.is_staff %}
                     {% include 'research_coordinators.html' %}
                 {% endif %}
 
             </div>
-            {% if not user.is_res_coordinators %}
+            {% if not user.is_res_coordinators or user.is_staff %}
                 <div class="hidden p-4 bg-gray-50 rounded-lg" id="extension" role="tabpanel" aria-labelledby="extension-tab">
-                    {% if not user.is_ext_coordinators %}
+                    {% if not user.is_ext_coordinators or user.is_staff %}
                         {% include 'extension.html' %}
-                    {% elif user.is_ext_coordinators %}
+                    {% elif user.is_ext_coordinators or user.is_staff %}
                         {% include 'research_coordinators.html' %}
                     {% endif %}
                 </div>

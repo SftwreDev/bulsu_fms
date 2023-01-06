@@ -15,7 +15,8 @@ class ActorSignUpForm(forms.Form):
         ("faculty", "faculty"),
         ("department heads", "department heads"),
         ("research coordinator", "research coordinator"),
-        ("extension coordinator", "extension coordinator")
+        ("extension coordinator", "extension coordinator"),
+        ("admin", "admin")
     )
     profile_picture = forms.FileField()
     username = forms.CharField(label="Username", max_length=255)

@@ -132,6 +132,24 @@ def signup(request):
                         user_id=user.id,
                         profile_picture=profile_picture
                     )
+                elif account_type == "admin":
+                    user = User.objects.create_user(
+                        email=email_address,
+                        password=password1,
+                        first_name=first_name,
+                        last_name=last_name,
+                        username=username,
+                        is_verified=True,
+                        is_staff=True,
+
+                    )
+                    Actor.objects.create(
+                        address=address,
+                        birthday=birthday,
+                        contact=contact,
+                        user_id=user.id,
+                        profile_picture=profile_picture
+                    )
                     return redirect("/signin")
     return render(request, template_name, context)
 
