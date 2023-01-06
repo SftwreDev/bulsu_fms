@@ -25,16 +25,11 @@ class Actor(models.Model):
     contact = models.CharField(max_length=255)
     department = models.CharField(max_length=255)
     position = models.CharField(max_length=255)
+    subjects = models.ManyToManyField(Subjects, related_name="faculty_subjects", null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.first_name} | {self.user.last_name}"
 
-
-class Faculty(Actor):
-    subjects = models.ManyToManyField(Subjects, related_name="faculty_subjects")
-
-    def __str__(self):
-        return self.user.last_name + self.user.first_name
 
 
 class Departments(models.Model):

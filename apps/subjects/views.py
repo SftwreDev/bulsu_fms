@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from apps.authentication.models import Faculty
+from apps.authentication.models import Actor
 
 
 # Create your views here.
@@ -8,20 +8,16 @@ from apps.authentication.models import Faculty
 def faculty_add_subjs(request):
     if request.method == "POST":
         subjs = request.POST.getlist("subjects")
-        faculty = Faculty.objects.filter(user=request.user)
+        actor = Actor.objects.filter(user_id=request.user.id)
 
-        if type(subjs) is list:
-            for subj in subjs:
-                for user in faculty:
-                    user.subjects.add(subj)
-        else:
-            for user in faculty:
-                user.subjects.add(subjs)
+        for subj in subjs:
+            for user in actor:
+                user.subjects.add(subj)
         return redirect("/")
 
 
 def remove_faculty_subjs(request, id):
-    faculty = Faculty.objects.filter(user=request.user)
+    faculty = Actor.objects.filter(user=request.user)
 
     for user in faculty:
         user.subjects.remove(id)

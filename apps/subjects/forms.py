@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import Q
 
-from apps.authentication.models import Faculty
+from apps.authentication.models import Actor
 from apps.subjects.models import Subjects
 
 
@@ -15,7 +15,7 @@ class SubjectsForm(forms.ModelForm):
     subjects = CustomMMCF(queryset=Subjects.objects.all(), widget=forms.CheckboxSelectMultiple)
 
     class Meta:
-        model = Faculty
+        model = Actor
         fields = ['subjects']
 
     def __init__(self, user=None, **kwargs):
