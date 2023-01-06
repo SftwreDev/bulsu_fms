@@ -22,3 +22,9 @@ class SubjectsForm(forms.ModelForm):
         super(SubjectsForm, self).__init__(**kwargs)
         if user:
             self.fields['subjects'].queryset = Subjects.objects.filter(~Q(faculty_subjects__user=user))
+
+
+class NewSubjectForm(forms.ModelForm):
+    class Meta:
+        model = Subjects
+        fields = "__all__"

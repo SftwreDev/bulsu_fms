@@ -17,7 +17,6 @@ def login_page(request):
         password = request.POST.get('password')
         try:
             check_email = User.objects.get(username=username)
-            user = User.objects.get(username=username)
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -136,58 +135,39 @@ def signup(request):
                     return redirect("/signin")
     return render(request, template_name, context)
 
-
-def email_verification_page(request):
-    return render(request, 'registration/email_verification_page.html')
-
-
-def verify_email(request, str):
-    email = decode_base64(str)
-    User.objects.filter(email=email).update(is_verified=True)
-    return redirect("authentication:login")
-
-
-def forgot_password(request):
-    template_name = "registration/forgot_password.html"
+def change_password(request):
+    template_name = "alert.html"
     if request.method == "POST":
-        email = request.POST.get('email')
-        confirm_email = request.POST.get('confirm-email')
-        if email != confirm_email:
-            messages.error(request, "Email address doesn't match")
-        else:
-            try:
-                User.objects.get(email=email)
-                send_reset_link(email)
-                messages.success(request, "Password reset link sent! Please check your email to reset your password")
-            except User.DoesNotExist:
-                messages.error(request, "Email address doesn't exists")
-    return render(request, template_name)
+        current_password = request.POST.get("currentPassword")
+        new_password = request.POST.get("newPassword")
+        confirm_password = request.POST.get("confirmPassword")
+        user = authenticate(request, username=request.user.username, password=current_password)
+        if user is not None:
+            if new_password == confirm_password:
+                user = User.objects.get(id=request.user.id)
+                user.set_password(new_password)
+                user.save()
 
-
-def reset_password(request, str):
-    template_name = "registration/reset_password.html"
-    email = decode_base64(str)
-    form = ResetPassword(request.POST or None)
-    if request.method == "POST":
-        if form.is_valid():
-            password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
-
-            if password1 != password2:
-                messages.error(request, "Passwords doesn't match")
+                context = {
+                    "status": "True",
+                    "message": "Password changed successfully"
+                }
+                print(context)
+                return render(request, template_name, context)
             else:
-                try:
-                    user = User.objects.get(email=email)
-                    user.set_password(password1)
-                    user.save()
-                    return redirect("authentication:login")
-                except User.DoesNotExist:
-                    messages.error(request, "Email address doesn't exists")
-    context = {
-        "form": form
-    }
-    return render(request, template_name, context)
-
+                context = {
+                    "status": "False",
+                    "message": "New password and confirm password doesn't match"
+                }
+                print(context)
+                return render(request, template_name, context)
+        else:
+            context = {
+                "status": "False",
+                "message": "Wrong current password"
+            }
+            print(context)
+            return render(request, template_name, context)
 
 def delete_user(request, id):
 

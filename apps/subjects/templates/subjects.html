@@ -31,7 +31,7 @@
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{  list.course_code }}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ list.units }}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-2 py-0.5 text-center" type="button" data-modal-toggle="removeSubjModal" onclick="subjID(id=`{{ list.id }}`)">
+                    <button class="block text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-2 py-0.5 text-center" type="button" data-modal-toggle="removeSubjModal" onclick="subjectID(id=`{{ list.id }}`)">
                       <svg class="w-4 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                       </svg>
@@ -63,10 +63,13 @@
                 </a>
             </div>
             <!-- Modal body -->
-
+            <p class="text-xs text-gray-600 my-6 mx-6">
+                Want to create new subjects? Click <a href="#" class="text-blue-700 underline decoration-1" data-modal-toggle="createNewSubj">here</a>
+            </p>
             <form method="post" action="/subjects/add">
                 {% csrf_token %}
                 <div class="p-6 space-y-6">
+
                     {{subjects_form}}
                 </div>
                 <!-- Modal footer -->
@@ -74,6 +77,37 @@
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
                     <a href="/" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</a>
                 </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Main modal -->
+<div id="createNewSubj" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+    <div class="relative w-full h-full max-w-2xl md:h-auto">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-4 border-b rounded-t ">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Create new subjects
+                </h3>
+                <a href="/" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center " data-modal-toggle="createNewSubj">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </a>
+            </div>
+            <form method="post" >
+                {% csrf_token %}
+                <div class="p-6 space-y-6">
+
+                    {{new_subj_form|crispy}}
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add</button>
+                    <a href="/" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</a>
+                </div>
+
             </form>
         </div>
     </div>
@@ -98,8 +132,9 @@
     </div>
 </div>
 
+
 <script type="application/javascript">
-    function subjID(id) {
+    function subjectID(id) {
         console.log(id)
         var confirm = document.getElementById("confirmRemoveSubj");
         confirm.setAttribute('href', `subjects/remove/${id}`)
