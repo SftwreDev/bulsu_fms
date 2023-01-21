@@ -31,12 +31,11 @@ class Actor(models.Model):
         return f"{self.user.first_name} | {self.user.last_name}"
 
 
-
 class Departments(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     department = models.CharField(max_length=255, unique=True)
-    headed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="dept_headed_by")
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="dept_created_by")
+    headed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="dept_headed_by", blank=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="dept_created_by", blank=True)
 
     def __str__(self):
         return self.department

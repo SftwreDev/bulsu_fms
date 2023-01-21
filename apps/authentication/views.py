@@ -50,10 +50,12 @@ def signup(request):
         address = request.POST.get('address')
         birthday = request.POST.get('birthday')
         contact = request.POST.get('contact')
+        department = request.POST.get('department')
+        position = request.POST.get('position')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
         account_type = request.POST.get('account_type')
-
+        print(department, position)
         if password1 != password2:
             messages.error(request, "Password doesn't match")
         else:
@@ -76,7 +78,9 @@ def signup(request):
                         birthday=birthday,
                         contact=contact,
                         user_id=user.id,
-                        profile_picture=profile_picture
+                        profile_picture=profile_picture,
+                        department=department,
+                        position=position
                     )
                     return redirect("/signin")
                 elif account_type == "department heads":
@@ -94,7 +98,9 @@ def signup(request):
                         birthday=birthday,
                         contact=contact,
                         user_id=user.id,
-                        profile_picture=profile_picture
+                        profile_picture=profile_picture,
+                        department=department,
+                        position=position
                     )
                     return redirect("/signin")
                 elif account_type == "research coordinator":
@@ -112,7 +118,9 @@ def signup(request):
                         birthday=birthday,
                         contact=contact,
                         user_id=user.id,
-                        profile_picture=profile_picture
+                        profile_picture=profile_picture,
+                        department=department,
+                        position=position
                     )
                     return redirect("/signin")
                 elif account_type == "extension coordinator":
@@ -130,7 +138,9 @@ def signup(request):
                         birthday=birthday,
                         contact=contact,
                         user_id=user.id,
-                        profile_picture=profile_picture
+                        profile_picture=profile_picture,
+                        department=department,
+                        position=position
                     )
                 elif account_type == "admin":
                     user = User.objects.create_user(
@@ -148,7 +158,9 @@ def signup(request):
                         birthday=birthday,
                         contact=contact,
                         user_id=user.id,
-                        profile_picture=profile_picture
+                        profile_picture=profile_picture,
+                        department=department,
+                        position=position
                     )
                     return redirect("/signin")
     return render(request, template_name, context)

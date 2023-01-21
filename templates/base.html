@@ -19,7 +19,7 @@
     <script>
       tailwind.config = {};
     </script>
-    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <link href="{% static 'flowbite.min.css' %}" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight&display=swap" rel="stylesheet">
@@ -40,9 +40,9 @@
   </head>
   <body class="bg-[#f9fafb]" style="font-family: 'Inter Tight', sans-serif;">
     {% django_browser_reload_script %}
-    {% block content %}{% endblock %}
+    {% block content %} {% endblock %}
 
-    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+    <script src="{% static 'flowbite.min.js' %}"></script>
     <script>
         document.body.addEventListener('htmx:configRequest', (event) => {
             event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}'; //insert csrf token when performing AJAX request
@@ -50,6 +50,7 @@
     </script>
 
     <script>
+
       $(document).ready(function () {
           $('#dataTable').DataTable();
 

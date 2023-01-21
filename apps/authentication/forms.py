@@ -25,6 +25,8 @@ class ActorSignUpForm(forms.Form):
     email_address = forms.EmailField(label="Email Address")
     address = forms.CharField(label="Address", max_length=255)
     birthday = forms.DateField(label="Birthday", widget=DateInput)
+    department = forms.ModelChoiceField(queryset=Departments.objects.all())
+    position = forms.CharField(label="Position", max_length=255)
     contact = forms.CharField(label="Contact No. ", max_length=255)
     password1 = forms.CharField(
         label="Password",
@@ -43,7 +45,7 @@ class ActorSignUpForm(forms.Form):
     class Meta:
         model = User
         fields = ['username', 'profile_picture', 'first_name', 'last_name', 'username', 'email_address', 'address',
-                  'birthday', 'contact',
+                  'birthday', 'contact', 'department', 'position',
                   'password1', 'password2', 'account_type']
 
 
@@ -54,9 +56,10 @@ class UpdateProfileForm(forms.ModelForm):
 
 
 class UpdateActorForm(forms.ModelForm):
+    department = forms.ModelChoiceField(queryset=Departments.objects.all())
     class Meta:
         model = Actor
-        fields = ['profile_picture', 'address', 'birthday', 'contact']
+        fields = ['profile_picture', 'address', 'birthday', 'contact', 'department', 'position']
 
 
 class ResetPassword(forms.Form):

@@ -1,19 +1,19 @@
 
-<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+<div class="mb-4 border-b border-gray-200">
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
         <li class="mr-2" role="presentation">
-            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Departments</button>
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="department-tab" data-tabs-target="#department" type="button" role="tab" aria-controls="department" aria-selected="false">Departments</button>
         </li>
         <li class="mr-2" role="presentation">
-            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Faculties</button>
+            <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="faculties-tab" data-tabs-target="#faculties" type="button" role="tab" aria-controls="faculties" aria-selected="false">Faculties</button>
         </li>
     </ul>
 </div>
 <div id="myTabContent">
-    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="hidden p-4 rounded-lg bg-gray-50" id="department" role="tabpanel" aria-labelledby="department-tab">
         {% include 'department.html' %}
     </div>
-    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+    <div class="hidden p-4 rounded-lg bg-gray-50" id="faculties" role="tabpanel" aria-labelledby="faculties-tab">
         {% include 'faculties.html' %}
     </div>
 </div>

@@ -82,6 +82,14 @@
               </div>
               <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full group">
+                    {{ form.department|as_crispy_field }}
+                </div>
+                <div class="relative z-0 w-full group">
+                    {{ form.position|as_crispy_field }}
+                </div>
+              </div>
+              <div class="grid md:grid-cols-2 md:gap-6">
+                <div class="relative z-0 w-full group">
                     {{ form.address|as_crispy_field }}
                 </div>
                 <div class="relative z-0 w-full group">

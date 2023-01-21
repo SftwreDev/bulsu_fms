@@ -26,9 +26,13 @@ def index(request):
     faculty_subjects = Subjects.objects.filter(faculty_subjects__user=request.user)
     researches = Research.objects.filter(posted_by=request.user)
     extensions = Extension.objects.filter(posted_by=request.user)
-    department = Departments.objects.filter(created_by=request.user)
     faculty = User.objects.filter(is_faculty=True)
     all_researches = Research.objects.all()
+
+    if request.user.is_heads:
+        department = Departments.objects.filter(created_by=request.user)
+    elif request.user.is_staff:
+        department = Departments.objects.all()
 
     # forms
     subjects_form = SubjectsForm(user=request.user)
@@ -37,8 +41,8 @@ def index(request):
     dept_form = DepartmentForm(request.POST or None)
     announcement_form = AnnouncementForm(request.POST or None, request.FILES or None)
     new_subj_form = NewSubjectForm(request.POST or None)
-    update_profile_form = UpdateProfileForm(request.POST or None, request.FILES or None, instance = user_obj)
-    update_actor_form = UpdateActorForm(request.POST or None, request.FILES or None, instance = actor_obj)
+    update_profile_form = UpdateProfileForm(request.POST or None, request.FILES or None, instance=user_obj)
+    update_actor_form = UpdateActorForm(request.POST or None, request.FILES or None, instance=actor_obj)
 
     if request.method == "POST":
         if request.POST.get('extension_form'):
@@ -71,7 +75,6 @@ def index(request):
                 update_actor_form.save()
                 return redirect("/")
 
-
     context = {
         "published_announcements": published_announcements,
         "faculty_subjects": faculty_subjects,
@@ -85,9 +88,11 @@ def index(request):
         "faculty": faculty,
         "announcement_form": announcement_form,
         "all_researches": all_researches,
-        "new_subj_form" : new_subj_form,
+        "new_subj_form": new_subj_form,
         "update_profile_form": update_profile_form,
-        "update_actor_form": update_actor_form
+        "update_actor_form": update_actor_form,
+        "user_obj": user_obj,
+        "actor_obj": actor_obj
     }
 
     return render(request, template_name, context)
